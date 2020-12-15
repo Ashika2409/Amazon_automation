@@ -1,0 +1,21 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+
+
+driver = webdriver.Chrome('./chromedriver.exe')
+driver.get("https://www.amazon.in/")
+driver.maximize_window()
+driver.find_element_by_id("twotabsearchtextbox").send_keys("Python Selenium book")        #Search for a book
+actions = ActionChains(driver)
+actions.send_keys(Keys.ENTER).perform() #Click on enter to find the searched book
+driver.find_element_by_link_text("Selenium with Python - A Beginner’s Guide: "
+                                 "Get started with Selenium using Python as a programming language").click()
+wins = driver.window_handles
+driver.switch_to_window(wins[1])
+
+driver.find_element_by_id("add-to-cart-button").click()           # Add the "book" to cart
+
+drop_down = driver.find_element_by_link_text("Your Account")      #dropdown
+actions.move_to_element(drop_down).perform()                      # hover over the dropdown link
+driver.find_element_by_link_text("Your Account").click()          # Select any dropdown
